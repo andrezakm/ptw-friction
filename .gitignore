@@ -1,0 +1,7 @@
+.DS_Store
+
+# Runtime output of a /PTW-friction run (client data — never committed)
+/PTW-friction/
+
+# Local, machine-specific Claude Code permission grants
+.claude/settings.local.json

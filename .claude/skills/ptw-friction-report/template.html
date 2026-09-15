@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8" />
+<title><!--TITLE--></title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@400;700;800;900&family=Space+Grotesk:wght@400;500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;1,9..144,400;1,9..144,700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --color-ink:    #0B0B0B;
+    --color-paper:  #F4EFE6;
+    --color-blue:   #1A4FFF;
+    --color-yellow: #FFD400;
+    --rule-paper:   rgba(11,11,11,.16);
+    --mute-paper:   rgba(11,11,11,.55);
+    --font-display: "Big Shoulders Display", Impact, sans-serif;
+    --font-serif:   "Fraunces", Georgia, serif;
+    --font-sans:    "Space Grotesk", -apple-system, sans-serif;
+    --font-mono:    ui-monospace, "SF Mono", Menlo, monospace;
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--color-paper); color: var(--color-ink); font-family: var(--font-sans); -webkit-font-smoothing: antialiased; }
+  ::selection { background: var(--color-blue); color: var(--color-paper); }
+
+  /* Page identifier strip */
+  .page-strip { background: var(--color-ink); color: var(--color-paper); padding: 14px 48px; display: flex; justify-content: space-between; align-items: baseline; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; }
+  .page-strip .num { background: var(--color-blue); color: var(--color-paper); padding: 3px 8px; font-weight: 700; }
+
+  /* Layout: sticky meta/TOC rail + content column */
+  main.page { padding: 56px 48px 120px; display: grid; grid-template-columns: 240px minmax(0, 760px); gap: 56px; max-width: 1100px; margin: 0 auto; }
+  @media (max-width: 860px) {
+    main.page { grid-template-columns: 1fr; padding: 32px 20px 80px; }
+    .meta-rail { position: static !important; }
+  }
+
+  .meta-rail { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mute-paper); position: sticky; top: 24px; align-self: start; }
+  .meta-rail dl { margin: 0 0 28px; }
+  .meta-rail dt { color: var(--color-ink); margin-bottom: 4px; }
+  .meta-rail dd { margin: 0 0 16px; letter-spacing: 0.04em; }
+  .meta-rail nav.toc { display: flex; flex-direction: column; gap: 10px; border-top: 1px solid var(--rule-paper); padding-top: 20px; }
+  .meta-rail nav.toc a { color: var(--mute-paper); text-decoration: none; letter-spacing: 0.06em; line-height: 1.4; }
+  .meta-rail nav.toc a:hover { color: var(--color-ink); }
+
+  /* Article — base typography, lifted from the überproduct design system (Foundation.html) */
+  article.prose { color: var(--color-ink); }
+  article.prose > * + * { margin-top: 22px; }
+  article.prose h1 { margin: 0 0 16px; font-family: var(--font-display); font-weight: 900; font-size: 72px; line-height: 0.94; letter-spacing: -0.02em; }
+  article.prose h1 em, article.prose h1 i { font-family: var(--font-serif); font-weight: 400; font-style: italic; }
+  article.prose h2 { margin: 64px 0 12px; font-family: var(--font-display); font-weight: 900; font-size: 40px; line-height: 0.98; letter-spacing: -0.015em; }
+  article.prose h3 { margin: 36px 0 8px; font-family: var(--font-display); font-weight: 800; font-size: 26px; line-height: 1.08; letter-spacing: -0.01em; }
+  article.prose h4 { margin: 28px 0 6px; font-family: var(--font-sans); font-weight: 700; font-size: 16px; letter-spacing: 0.01em; text-transform: uppercase; }
+  article.prose .lede { font-family: var(--font-serif); font-style: italic; font-weight: 400; font-size: 24px; line-height: 1.4; color: var(--color-ink); }
+  article.prose p { font-family: var(--font-sans); font-size: 16px; line-height: 1.6; margin: 0; color: var(--color-ink); }
+  article.prose a { color: var(--color-blue); text-decoration: none; border-bottom: 1.5px solid var(--color-blue); padding-bottom: 1px; }
+  article.prose a:hover { background: var(--color-blue); color: var(--color-paper); }
+  article.prose strong { font-weight: 700; }
+  article.prose em { font-family: var(--font-serif); font-style: italic; }
+  article.prose ul, article.prose ol { padding-left: 0; list-style: none; }
+  article.prose ul li, article.prose ol li { font-family: var(--font-sans); font-size: 16px; line-height: 1.6; padding-left: 26px; position: relative; margin-top: 8px; }
+  article.prose ul li::before { content: '→'; position: absolute; left: 0; color: var(--color-blue); font-weight: 700; }
+  article.prose ol { counter-reset: list; }
+  article.prose ol li { counter-increment: list; }
+  article.prose ol li::before { content: counter(list, decimal-leading-zero); position: absolute; left: 0; font-family: var(--font-mono); font-size: 11px; color: var(--color-blue); top: 4px; letter-spacing: 0.06em; }
+  article.prose blockquote { margin: 28px 0; padding: 4px 0 4px 22px; border-left: 3px solid var(--color-blue); font-family: var(--font-serif); font-style: italic; font-size: 21px; line-height: 1.35; color: var(--color-ink); }
+  article.prose blockquote cite { display: block; margin-top: 10px; font-family: var(--font-mono); font-style: normal; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--mute-paper); }
+  article.prose hr { border: 0; border-top: 1px solid var(--rule-paper); margin: 40px 0; }
+  article.prose code { font-family: var(--font-mono); font-size: 13px; background: rgba(11,11,11,.06); padding: 2px 6px; }
+  article.prose table { width: 100%; border-collapse: collapse; }
+  article.prose th, article.prose td { font-family: var(--font-sans); font-size: 14px; text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--rule-paper); vertical-align: top; }
+  article.prose th { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--mute-paper); border-bottom: 1.5px solid var(--color-ink); }
+
+  /* Section marker — mono-caps eyebrow with § NN chip, per design-system section-marker pattern */
+  .eyebrow { display: flex; align-items: center; gap: 14px; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--mute-paper); margin: 0 0 18px; }
+  .eyebrow .num { background: var(--color-ink); color: var(--color-paper); padding: 3px 10px; font-weight: 700; flex-shrink: 0; }
+  .eyebrow .rule { flex: 1; height: 1px; background: var(--rule-paper); }
+  section.report-section { margin-top: 64px; }
+  section.report-section:first-of-type { margin-top: 48px; }
+
+  /* Warning callout — yellow accent used sparingly, per tokens.md */
+  .callout { margin: 24px 0; padding: 20px 24px; background: var(--color-yellow); color: var(--color-ink); box-shadow: 4px 4px 0 var(--color-ink); }
+  .callout .callout-label { display: block; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 8px; font-weight: 700; }
+  .callout p { font-family: var(--font-sans); font-size: 15px; line-height: 1.5; margin: 0; }
+
+  @media print {
+    .meta-rail nav.toc { display: none; }
+    main.page { grid-template-columns: 1fr; max-width: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page-strip">
+  <span><span class="num">§ PTW-FRICTION</span>&nbsp;&nbsp;<!--CLIENT--></span>
+  <span><!--DATE--></span>
+</div>
+
+<main class="page">
+  <aside class="meta-rail">
+    <dl>
+      <dt>Workshop</dt><dd>Play to Win — friction</dd>
+      <dt>Kunde</dt><dd><!--CLIENT--></dd>
+      <dt>Stand</dt><dd><!--DATE--></dd>
+    </dl>
+    <nav class="toc">
+      <!--TOC-->
+    </nav>
+  </aside>
+
+  <article class="prose">
+    <h1><!--TITLE--></h1>
+    <p class="lede"><!--TLDR--></p>
+
+    <!--BODY-->
+
+  </article>
+</main>
+
+</body>
+</html>
